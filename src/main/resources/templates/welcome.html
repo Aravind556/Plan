@@ -1,0 +1,253 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Welcome</title>-->
+<!--    <link rel="stylesheet" href="/css/style.css"> &lt;!&ndash; Link your CSS &ndash;&gt;-->
+<!--    <script src="/js/welcome.js" defer></script>-->
+<!--    <style>-->
+<!--        /* Fancy Background Animation */-->
+<!--        body {-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            background: linear-gradient(120deg, #6a11cb, #2575fc);-->
+<!--            color: white;-->
+<!--            text-align: center;-->
+<!--            height: 100vh;-->
+<!--            display: flex;-->
+<!--            justify-content: center;-->
+<!--            align-items: center;-->
+<!--            overflow: hidden;-->
+<!--        }-->
+
+<!--        .container {-->
+<!--            animation: fadeIn 1.5s ease-in-out;-->
+<!--            padding-bottom: 20px;-->
+<!--        }-->
+
+<!--        h1 {-->
+<!--            font-size: 3rem;-->
+<!--            margin-bottom: 10px;-->
+<!--        }-->
+
+<!--        p {-->
+<!--            font-size: 1.5rem;-->
+<!--            opacity: 0;-->
+<!--            animation: fadeSlide 1s ease-in-out forwards 0.5s;-->
+<!--        }-->
+
+<!--        button {-->
+<!--            padding: 12px 24px;-->
+<!--            font-size: 1rem;-->
+<!--            color: white;-->
+<!--            background: #ff416c;-->
+<!--            border: none;-->
+<!--            border-radius: 25px;-->
+<!--            cursor: pointer;-->
+<!--            margin-top: 20px;-->
+<!--            transition: transform 0.3s ease, background 0.3s ease;-->
+<!--        }-->
+
+<!--        button:hover {-->
+<!--            transform: scale(1.1);-->
+<!--            background: #ff4b2b;-->
+<!--        }-->
+
+<!--        /* Keyframe Animations */-->
+<!--        @keyframes fadeIn {-->
+<!--            from { opacity: 0; transform: scale(0.9); }-->
+<!--            to { opacity: 1; transform: scale(1); }-->
+<!--        }-->
+
+<!--        @keyframes fadeSlide {-->
+<!--            from { opacity: 0; transform: translateY(20px); }-->
+<!--            to { opacity: 1; transform: translateY(0); }-->
+<!--        }-->
+
+<!--        /* Floating Circles Animation */-->
+<!--        .circles {-->
+<!--            position: absolute;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            overflow: hidden;-->
+<!--        }-->
+
+<!--        .circles div {-->
+<!--            position: absolute;-->
+
+<!--            width: 50px;-->
+<!--            height: 50px;-->
+<!--            background: rgba(255, 255, 255, 0.2);-->
+<!--            border-radius: 50%;-->
+<!--            animation: float 10s infinite linear;-->
+<!--        }-->
+
+<!--        @keyframes float {-->
+<!--            from { transform: translateY(100vh); }-->
+<!--            to { transform: translateY(-10vh); }-->
+<!--        }-->
+
+<!--        .circles div:nth-child(1) { left: 10%; animation-duration: 6s; }-->
+<!--        .circles div:nth-child(2) { left: 25%; animation-duration: 8s; }-->
+<!--        .circles div:nth-child(3) { left: 40%; animation-duration: 10s; }-->
+<!--        .circles div:nth-child(4) { left: 60%; animation-duration: 7s; }-->
+<!--        .circles div:nth-child(5) { left: 75%; animation-duration: 9s; }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="circles">-->
+<!--    <div></div><div></div><div></div><div></div><div></div>-->
+<!--</div>-->
+
+<!--<div class="container">-->
+<!--    <h1>Welcome, <span id="username">User</span>! 🎉</h1>-->
+<!--    <p>You've successfully logged in. Enjoy your stay!</p>-->
+
+<!--&lt;!&ndash;        <button id="logoutBtn" type="button">Logout</button>&ndash;&gt;-->
+<!--</div>-->
+
+<!--<div class="container">-->
+<!--    <form action="/v1/auth/logout" method="post">-->
+<!--        <button id ="logoutBtn" type="submit">Logout</button>-->
+<!--    </form>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/welcome.js" defer></script>
+    <style>
+        /* Fancy Background Animation */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #6a11cb, #2575fc);
+            color: white;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        .container {
+            animation: fadeIn 1.5s ease-in-out;
+            padding: 20px;
+            z-index: 10;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.5rem;
+            opacity: 0;
+            animation: fadeSlide 1s ease-in-out forwards 0.5s;
+            margin-bottom: 30px;
+        }
+
+
+        button {
+            padding: 12px 24px;
+            font-size: 1rem;
+            color: white;
+            background: #ff416c;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+            width: 150px;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            background: #ff4b2b;
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Floating Circles Animation */
+        .circles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .circles div {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: float 10s infinite linear;
+        }
+
+        @keyframes float {
+            from { transform: translateY(100vh); }
+            to { transform: translateY(-10vh); }
+        }
+
+        .circles div:nth-child(1) { left: 10%; animation-duration: 6s; width: 60px; height: 60px; }
+        .circles div:nth-child(2) { left: 25%; animation-duration: 8s; width: 40px; height: 40px; }
+        .circles div:nth-child(3) { left: 40%; animation-duration: 10s; width: 70px; height: 70px; }
+        .circles div:nth-child(4) { left: 60%; animation-duration: 7s; width: 30px; height: 30px; }
+        .circles div:nth-child(5) { left: 75%; animation-duration: 9s; width: 50px; height: 50px; }
+    </style>
+</head>
+<body>
+<div class="circles">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+
+<div class="container">
+    <h1>Welcome, <span id="username">User</span>! 🎉</h1>
+    <p>You've successfully logged in. Enjoy your stay!</p>
+
+    <form action="/v1/auth/logout" method="post">
+        <button id="logoutBtn" type="submit">Logout</button>
+    </form>
+</div>
+</body>
+</html>
