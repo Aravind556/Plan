@@ -1,2 +1,0 @@
- User user.
-        return ResponseEntity.ok(userservice.register(user));
