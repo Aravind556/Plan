@@ -1,7 +1,6 @@
 package com.test.plan;
 
 
-import com.test.plan.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.test.plan.Service.UserService;
 
 
 @Configuration
@@ -40,12 +41,13 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/v1/auth/register","/css/**","/js/**").permitAll()
+                        .requestMatchers("/v1/auth/register", "/css/**", "/js/**", "/fonts/**", "/images/**").permitAll()
+                        .requestMatchers("/api/tasks/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/v1/auth/login")
-                        .defaultSuccessUrl("/welcome",true)
+                        .defaultSuccessUrl("/tasks", true)
                         .permitAll()
                 )
                 .logout(logout -> logout
@@ -56,8 +58,8 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .sessionManagement(session -> session
-                        .maximumSessions(1) // Only allow one session per user
-                        .expiredUrl("/login?expired=true")
+                        .maximumSessions(1)
+                        .expiredUrl("/v1/auth/login?expired=true")
                 );
 
         return http.build();

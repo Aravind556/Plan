@@ -1,53 +1,56 @@
 package com.test.plan.Controller;
 
-import com.test.plan.Entity.Task;
-import com.test.plan.Entity.Users;
-import com.test.plan.Service.TaskService;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.test.plan.Entity.Task;
+import com.test.plan.Service.TaskService;
 
 @RestController
-@RequestMapping("/tasks")
+@RequestMapping("/api/tasks")
 public class Taskcontroller {
 
     @Autowired
     private TaskService taskService;
 
-    @GetMapping("/{userid}")
-    public List<Task> showtasks(HttpSession session) {
-        Users user = (Users) session.getAttribute("user");
-        if (user == null) {
-            throw new RuntimeException("User not logged in");
-        }
-        return taskService.gettaskbyuser(user.getId());
-    }
-    @PostMapping("add/{userid}/{taskid}")
-    public Task addTask(@RequestBody Task task, HttpSession session) {
-        Users user = (Users) session.getAttribute("user");
-        if (user == null) {
-            throw new RuntimeException("User not logged in");
-        }
-        return taskService.saveTask(task, user.getId());
-    }
-    @PutMapping("update/{userid}/{taskid}")
-    public Optional<Task> updateTask(@PathVariable int taskId, @RequestBody Task task, HttpSession session) {
-        Users user = (Users) session.getAttribute("user");
-        if (user == null) {
-            throw new RuntimeException("User not logged in");
-        }
-        return Optional.ofNullable(taskService.updatetask(task, user.getId(), taskId));
+    @GetMapping
+    public ResponseEntity<List<Task>> getAllTasks() {
+        return ResponseEntity.ok(taskService.getCurrentUserTasks());
     }
 
-    @DeleteMapping("delete/{userid}/{taskid}")
-    public void deleteTask(@PathVariable int taskId, HttpSession session) {
-        Users user = (Users) session.getAttribute("user");
-        if (user == null) {
-            throw new RuntimeException("User not logged in");
-        }
-        taskService.delete(user.getId(),taskId );
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<Task>> getTasksByStatus(@PathVariable Boolean status) {
+        return ResponseEntity.ok(taskService.getCurrentUserTasksByStatus(status));
+    }
+
+    @GetMapping("/{taskId}")
+    public ResponseEntity<Task> getTaskById(@PathVariable int taskId) {
+        return ResponseEntity.ok(taskService.gettaskbyid(taskId));
+    }
+
+    @PostMapping
+    public ResponseEntity<Task> addTask(@RequestBody Task task) {
+        return ResponseEntity.ok(taskService.addTaskForCurrentUser(task));
+    }
+
+    @PutMapping("/{taskId}")
+    public ResponseEntity<Task> updateTask(@PathVariable int taskId, @RequestBody Task task) {
+        return ResponseEntity.ok(taskService.updatetask(task, taskId));
+    }
+
+    @DeleteMapping("/{taskId}")
+    public ResponseEntity<Void> deleteTask(@PathVariable int taskId) {
+        taskService.delete(taskId);
+        return ResponseEntity.ok().build();
     }
 }

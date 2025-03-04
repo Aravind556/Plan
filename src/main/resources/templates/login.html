@@ -12,7 +12,7 @@
 <body>
 <section>
 
-  <form action="/v1/auth/login" method="post">
+  <form action="/v1/auth/login" method="post" onsubmit="console.log('Submitting login form');">
     <h1>Login</h1>
     <div class="dialog-row">
       <label th:if="${param.error}" th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" class="text-center redText"></label>
