@@ -18,8 +18,20 @@
     --hover-color: #334155;            /* Slate 700 */
     
     /* UI Elements */
-    --border-radius: 6px;
+    --border-radius: clamp(4px, 0.5vw, 8px);
     --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+
+    /* Spacing Scale */
+    --space-xs: clamp(0.25rem, 0.5vw, 0.5rem);
+    --space-sm: clamp(0.5rem, 1vw, 1rem);
+    --space-md: clamp(1rem, 2vw, 2rem);
+    --space-lg: clamp(1.5rem, 3vw, 3rem);
+    
+    /* Typography Scale */
+    --font-size-sm: clamp(0.875rem, 1.5vw, 1rem);
+    --font-size-base: clamp(1rem, 1.75vw, 1.125rem);
+    --font-size-lg: clamp(1.25rem, 2vw, 1.5rem);
+    --font-size-xl: clamp(1.5rem, 2.5vw, 2.5rem);
 }
 
 * {
@@ -33,25 +45,32 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     line-height: 1.6;
+    font-size: var(--font-size-base);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
-    max-width: 900px;
+    width: min(95%, 1200px);
     margin: 0 auto;
-    padding: 2rem 1rem;
+    padding: var(--space-md);
+    flex: 1;
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-md);
     border-bottom: 1px solid var(--border-color);
+    flex-wrap: wrap;
+    gap: var(--space-md);
 }
 
 .header h1 {
-    font-size: 2.5rem;
+    font-size: var(--font-size-xl);
     font-weight: 700;
     color: var(--primary-color);
     text-shadow: 0 2px 4px rgba(109, 40, 217, 0.2);
@@ -66,8 +85,8 @@ body {
 }
 
 .user-icon {
-    width: 36px;
-    height: 36px;
+    width: clamp(36px, 5vw, 44px);
+    height: clamp(36px, 5vw, 44px);
     border-radius: 8px;
     background-color: var(--primary-color);
     color: white;
@@ -78,6 +97,7 @@ body {
     font-weight: 500;
     transition: all 0.2s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: var(--font-size-base);
 }
 
 .user-icon:hover {
@@ -94,7 +114,8 @@ body {
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     box-shadow: 0 4px 6px rgba(15, 23, 42, 0.1);
-    min-width: 150px;
+    min-width: max(200px, 25vw);
+    max-width: min(90vw, 400px);
     display: none;
     z-index: 1000;
 }
@@ -159,17 +180,18 @@ body {
 }
 
 .task-form {
-    margin-bottom: 2rem;
+    margin-bottom: var(--space-lg);
+    display: grid;
+    gap: var(--space-sm);
+    grid-template-columns: 1fr auto;
 }
 
 .task-input {
     width: 100%;
-    padding: 0.8rem;
+    padding: var(--space-sm);
+    font-size: var(--font-size-base);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    transition: all 0.2s ease;
     background-color: var(--card-background);
     color: var(--text-color);
 }
@@ -180,13 +202,14 @@ body {
 }
 
 .btn {
-    padding: 0.6rem 1.2rem;
-    border: none;
+    padding: var(--space-xs) var(--space-md);
     border-radius: var(--border-radius);
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: 500;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: var(--font-size-sm);
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
 }
 
 .btn:active {
@@ -227,19 +250,17 @@ body {
 
 .filters {
     display: flex;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-lg);
     align-items: center;
 }
 
 .filter-btn {
-    padding: 0.4rem 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    background-color: var(--card-background);
-    color: var(--text-light);
-    font-size: 0.9rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--font-size-sm);
+    min-width: max(80px, 15%);
+    flex: 1;
 }
 
 .filter-btn:hover {
@@ -281,22 +302,20 @@ body {
 }
 
 .task-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    display: grid;
+    gap: var(--space-sm);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
 }
 
 .task-item {
     background-color: var(--card-background);
-    padding: 1rem;
+    padding: var(--space-md);
     border-radius: var(--border-radius);
     border: 1px solid var(--border-color);
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: center;
-    animation: scaleIn 0.3s ease-out;
+    flex-direction: column;
+    gap: var(--space-sm);
+    transition: transform 0.3s ease;
 }
 
 .task-item:hover {
@@ -309,7 +328,7 @@ body {
 .task-content {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: var(--space-sm);
     flex: 1;
 }
 
@@ -346,9 +365,10 @@ body {
 }
 
 .task-text {
-    font-size: 1rem;
-    color: var(--text-color);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+    word-break: break-word;
+    flex: 1;
 }
 
 .task-item.completed .task-text {
@@ -365,9 +385,8 @@ body {
 
 .task-actions {
     display: flex;
-    gap: 0.5rem;
-    opacity: 0;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: var(--space-xs);
+    justify-content: flex-end;
 }
 
 .task-item:hover .task-actions {
@@ -377,15 +396,16 @@ body {
 
 .notification {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 1rem 1.5rem;
-    border-radius: 8px;
+    bottom: var(--space-md);
+    right: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--border-radius);
     color: white;
-    font-size: 0.9rem;
+    font-size: var(--font-size-sm);
     z-index: 1000;
     animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 6px rgba(15, 23, 42, 0.1);
+    max-width: min(90%, 400px);
 }
 
 .notification.success {
@@ -408,25 +428,38 @@ body {
 }
 
 @media (max-width: 768px) {
-    .container {
-        padding: 1rem;
+    .task-form {
+        grid-template-columns: 1fr;
     }
-    
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
+
+    .filters {
+        justify-content: center;
     }
-    
+
     .task-item {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    .task-actions {
-        opacity: 1;
+        margin-inline: auto;
         width: 100%;
-        justify-content: flex-end;
+    }
+
+    .modal-footer {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+    }
+}
+
+/* Additional breakpoint for very small devices */
+@media (max-width: 380px) {
+    .header h1 {
+        font-size: 1.75rem;
+    }
+
+    .task-item {
+        padding: 0.75rem;
+    }
+
+    .btn {
+        width: 100%;  /* Full-width buttons on very small screens */
+        margin-bottom: 0.5rem;
     }
 }
 
@@ -533,12 +566,14 @@ body {
 .modal-content {
     background-color: var(--card-background);
     border-radius: var(--border-radius);
-    padding: 1.5rem;
-    width: 90%;
-    max-width: 400px;
+    padding: var(--space-lg);
+    width: min(95%, 500px);
+    max-height: min(90vh, 600px);
     border: 1px solid var(--border-color);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     animation: slideInUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: grid;
+    gap: var(--space-md);
 }
 
 .modal-header {
@@ -546,7 +581,7 @@ body {
 }
 
 .modal-title {
-    font-size: 1.25rem;
+    font-size: var(--font-size-lg);
     font-weight: 600;
     color: var(--text-color);
 }
@@ -554,7 +589,7 @@ body {
 .modal-body {
     margin-bottom: 1.5rem;
     color: var(--text-light);
-    font-size: 0.95rem;
+    font-size: var(--font-size-base);
     line-height: 1.5;
 }
 
@@ -601,5 +636,37 @@ body {
     to {
         transform: translateY(0);
         opacity: 1;
+    }
+}
+
+/* Responsive Grid Layout */
+@container (min-width: 40em) {
+    .task-list {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+    .task-actions {
+        opacity: 1;
+        position: static;
+    }
+
+    .btn {
+        padding: var(--space-sm) var(--space-md);
+    }
+}
+
+/* Print Styles */
+@media print {
+    .container {
+        width: 100%;
+        max-width: none;
+    }
+
+    .task-item {
+        break-inside: avoid;
+        page-break-inside: avoid;
     }
 } 
